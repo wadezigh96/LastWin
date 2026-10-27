@@ -6,7 +6,7 @@ builds a prize pot on-chain. When the clock hits zero (or the curve sells out), 
 PancakeSwap and the last buyer takes the pot.
 
 None of the live OpenFour mechanisms (Universal Subscription, Royalty, Creator Incentives, Likwid Dex,
-CubePeg, Agent ID Exclusive) is a timer/pot game. The FOMO4D pattern is one of the most proven volume
+CubePeg, Agent ID Exclusive) is a timer/pot game. The FOMO3D pattern is one of the most proven volume
 drivers in crypto: people keep buying near zero to grab the pot, so the final minutes are the busiest.
 
 ## Modules
@@ -57,7 +57,8 @@ game and mitigated by every counting buy adding time; the `maxRemaining` cap kee
 
 ## Tests
 
-`forge test` — 28 tests including a fuzz test that the clock never exceeds its bounds, settlement
+`forge test` — 31 tests: 28 unit tests plus 3 end-to-end games run through a simulated Core
+buy path (timer end, sell-out, post-round cap). Includes a fuzz test that the clock never exceeds its bounds, settlement
 in native / wrapped native / ERC20, reentrancy, rejecting recipients, migration rechecks and
 validator rules.
 
@@ -66,6 +67,13 @@ validator rules.
 1. Confirm FeeTier (tax) fees are pushed immediately to the recipient (pot), in native or wrapped native.
 2. Confirm the registered `BondingCurveModule`, `StandardVault` and PCS V2 adapter can be composed into
    this preset, and whether a permissionless migrate entry exists (otherwise the first buy after zero triggers it).
+
+## More
+
+- [Mechanism spec for integrators](docs/mechanism.md)
+- [Threat model and audit notes](docs/threat-model.md)
+- `script/Deploy.s.sol` deploys the implementations and validator (registration is done by OpenFour governance)
+- CI runs `forge test` on every push
 
 ## Setup
 
