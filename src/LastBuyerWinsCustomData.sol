@@ -181,6 +181,39 @@ contract LastBuyerWinsCustomData is Initializable, IOpenFourCustomDataModule, IO
         return lastBuyer != address(0) ? lastBuyer : _creator();
     }
 
+    /// @notice One-call snapshot for frontends and bots.
+    struct GameState {
+        uint256 deadline;
+        uint256 hardDeadline;
+        uint256 timeLeft;
+        bool ended;
+        bool migrated;
+        address lastBuyer;
+        uint256 qualifyingBuys;
+        uint256 minQualifyingQuote;
+        uint256 extensionPerBuy;
+        uint16 winnerBps;
+        uint256 potNative;
+        address potErc20;
+        uint256 potErc20Amount;
+    }
+
+    function gameState() external view returns (GameState memory s) {
+        s.deadline = _deadline;
+        s.hardDeadline = hardDeadline;
+        s.ended = roundEnded();
+        s.timeLeft = s.ended ? 0 : _deadline - block.timestamp;
+        s.migrated = migrated;
+        s.lastBuyer = lastBuyer;
+        s.qualifyingBuys = qualifyingBuys;
+        s.minQualifyingQuote = params.minQualifyingQuote;
+        s.extensionPerBuy = params.extensionPerBuy;
+        s.winnerBps = params.winnerBps;
+        s.potNative = address(this).balance;
+        s.potErc20 = _potErc20();
+        if (s.potErc20 != address(0)) s.potErc20Amount = IERC20(s.potErc20).balanceOf(address(this));
+    }
+
     // ------------------------------------------------------------------
     // Settlement (permissionless, pull-style, callable repeatedly to sweep)
     // ------------------------------------------------------------------
