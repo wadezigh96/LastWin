@@ -6,7 +6,7 @@ builds a prize pot on-chain. When the clock hits zero (or the curve sells out), 
 PancakeSwap and the last buyer takes the pot.
 
 None of the live OpenFour mechanisms (Universal Subscription, Royalty, Creator Incentives, Likwid Dex,
-CubePeg, Agent ID Exclusive) is a timer/pot game. The FOMO3D pattern is one of the most proven volume
+CubePeg, Agent ID Exclusive) is a timer/pot game. The FOMO4D pattern is one of the most proven volume
 drivers in crypto: people keep buying near zero to grab the pot, so the final minutes are the busiest.
 
 ## Modules
