@@ -339,12 +339,14 @@ contract LastBuyerWinsTest is Test {
         assertEq(alice.balance, 9 ether);
         assertEq(creator.balance, 1 ether);
         assertEq(address(data).balance, 0);
+        assertEq(data.totalPaidToWinnerByAsset(address(0)), 9 ether);
+        assertEq(data.totalPaidToCreatorByAsset(address(0)), 1 ether);
 
         // late fees (e.g. the graduation-trigger buy) can be swept again
         vm.deal(address(data), 1 ether);
         data.settle();
         assertEq(alice.balance, 9.9 ether);
-        assertEq(data.totalPaidToWinner(), 9.9 ether);
+        assertEq(data.totalPaidToWinnerByAsset(address(0)), 9.9 ether);
     }
 
     function test_settleWrappedNativeAndNative() public {
@@ -363,11 +365,18 @@ contract LastBuyerWinsTest is Test {
         MockUSD usd = new MockUSD();
         _deploy(address(usd));
         _buy(bob, 1 ether);
+        vm.deal(address(data), 1 ether);
         usd.mint(address(data), 1000e18);
         vm.warp(T0 + 1 hours);
         data.settle();
         assertEq(usd.balanceOf(bob), 900e18);
         assertEq(usd.balanceOf(creator), 100e18);
+        assertEq(bob.balance, 0.9 ether);
+        assertEq(creator.balance, 0.1 ether);
+        assertEq(data.totalPaidToWinnerByAsset(address(0)), 0.9 ether);
+        assertEq(data.totalPaidToCreatorByAsset(address(0)), 0.1 ether);
+        assertEq(data.totalPaidToWinnerByAsset(address(usd)), 900e18);
+        assertEq(data.totalPaidToCreatorByAsset(address(usd)), 100e18);
     }
 
     function test_noBuyerPotGoesToCreator() public {

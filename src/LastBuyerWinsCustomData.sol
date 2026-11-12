@@ -61,9 +61,10 @@ contract LastBuyerWinsCustomData is Initializable, IOpenFourCustomDataModule, IO
     bool public migrated;
     uint256 public migratedAt;
 
-    /// @notice Cumulative amounts paid out (native counted together with wrapped native).
-    uint256 public totalPaidToWinner;
-    uint256 public totalPaidToCreator;
+    /// @notice Cumulative payouts by accounting asset; address(0) denotes native currency.
+    ///         For native-quoted tokens, wrapped-native payouts are normalized to address(0).
+    mapping(address => uint256) public totalPaidToWinnerByAsset;
+    mapping(address => uint256) public totalPaidToCreatorByAsset;
 
     bytes private _initParams;
     string private _moduleVersion;
@@ -231,8 +232,8 @@ contract LastBuyerWinsCustomData is Initializable, IOpenFourCustomDataModule, IO
         uint256 nativeBal = address(this).balance;
         if (nativeBal > 0) {
             (uint256 w, uint256 c) = _split(nativeBal);
-            totalPaidToWinner += w;
-            totalPaidToCreator += c;
+            totalPaidToWinnerByAsset[address(0)] += w;
+            totalPaidToCreatorByAsset[address(0)] += c;
             _payNative(winner, w, wnative);
             _payNative(creator, c, wnative);
             emit PotSettled(address(0), winner, w, creator, c);
@@ -242,8 +243,9 @@ contract LastBuyerWinsCustomData is Initializable, IOpenFourCustomDataModule, IO
             uint256 bal = IERC20(erc20).balanceOf(address(this));
             if (bal > 0) {
                 (uint256 w, uint256 c) = _split(bal);
-                totalPaidToWinner += w;
-                totalPaidToCreator += c;
+                address accountingAsset = _accountingAsset(erc20);
+                totalPaidToWinnerByAsset[accountingAsset] += w;
+                totalPaidToCreatorByAsset[accountingAsset] += c;
                 if (w > 0) IERC20(erc20).safeTransfer(winner, w);
                 if (c > 0) IERC20(erc20).safeTransfer(creator, c);
                 emit PotSettled(erc20, winner, w, creator, c);
@@ -310,6 +312,11 @@ contract LastBuyerWinsCustomData is Initializable, IOpenFourCustomDataModule, IO
 
     function _quoteAsset() internal view returns (address quote) {
         (,,,,,,,,, quote,,,,,,,,,,) = IOpenFourCore(fourCore).tokens(token);
+    }
+
+    /// @dev Keep native and wrapped-native amounts in one BNB accounting bucket when BNB is the quote.
+    function _accountingAsset(address asset) internal view returns (address) {
+        return _quoteAsset() == address(0) ? address(0) : asset;
     }
 
     function _wrappedNative() internal view returns (address w) {
