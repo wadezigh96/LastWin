@@ -92,7 +92,7 @@ be your wallet. Suggested first-game params (all from `docs/mechanism.md`):
 
 | Slot | Params |
 | --- | --- |
-| Token | name e.g. `LastWin Demo`, symbol `LWD`, maxSupply `1,000,000,000`, saleAmount `800,000,000`, raiseAmount `1` BNB, quote = native BNB (`address(0)`), no presale |
+| Token | name e.g. `LastWin Demo`, symbol `LWD`, maxSupply `1,000,000,000`, saleAmount `800,000,000`, raiseAmount `1` BNB, quote = **WBNB (ERC20), bukan native** — create dengan quote native ditolak StandardVault (`Vault: quote must be ERC20`, terbukti di fork lokal 2026-11-20), no presale |
 | Curve | reuse fork `BondingCurveModule` (default bonding curve params from the fork preset) |
 | Custom data | `initialDuration` 3600, `extensionPerBuy` 60, `maxRemaining` 3600, `maxGameDuration` 604800, `minQualifyingQuote` 0.01 BNB, `winnerBps` 9000 |
 | Trade | `buyPotFeeBps` 100, `sellPotFeeBps` 200, `maxBuyAmount` 0 (unlimited), `postRoundMaxBuy` 1e18 |
@@ -111,6 +111,8 @@ For a fast demo, use a short clock instead: `initialDuration` 300 (minimum),
 3. **Small buy** (< 0.01 BNB): trades, but `lastBuyer` and `qualifyingBuys` do not change.
 4. **Wait** until `timeLeft` hits 0 (5 minutes on the short clock). `roundEnded()` is now true.
 5. **Buy after zero**: allowed but capped at `postRoundMaxBuy`, does not change the winner.
+   Use `buy(token, postRoundMaxBuy)` — `buyByBudget` reverts after zero
+   (`CoreErrBudgetNotExecutable`, proven in the local fork run).
 6. **`settle()`** (anyone can call, on the custom-data clone): winner gets 90% of the pot,
    creator 10%. Check balances + `PotSettled` event. Call it again: second call only
    sweeps fees that arrived later.

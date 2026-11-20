@@ -33,6 +33,37 @@ Checked by Spark on 2026-11-20 against commit `20fa50b` (`fix: track payout tota
 4. **No independent audit yet.** The threat model recommends one before mainnet (offered by the
    OpenFour program). The fork test + audit report are the two items of the official submit pack.
 
+## End-to-end di fork lokal Anvil (2026-11-20, bukti: `fork-local/FORK_LOCAL_PROOF.md`)
+
+Game LastWin terbukti jalan penuh di fork lokal Anvil dari BSC testnet (chain 97,
+fork block 143811509, semua signer akun default Anvil, tanpa kunci user / dana asli).
+Token `0x9fc071182F6E5f7265A0d5F361aCFd62A77d7e3c` ("LastWin Demo" / LWD, preset
+1778027615734, quote WBNB): buy 1 → lastBuyer creator, qualifyingBuys 1; buy 2 →
+lastBuyer pindah ke buyer2, qualifyingBuys 2; buy kecil 0,005 BNB → lastBuyer &
+qualifyingBuys TIDAK berubah; time travel +419 dtk → clock nol; `settle()` tx
+`0x759aa476804c61d4b631542334be9eefeed538a9dbcbf3ed8c09efef941cab0f` membayar
+TEPAT 90% winner (+0,000926470273759957 WBNB) / 10% creator
+(+0,000102941141528885 WBNB); settle kedua (sweep) bayar 0 tanpa revert; buy
+pasca-nol via `buy(token, 1)` terima tepat 1 token (cap) dan memicu migrasi
+(phase Migrated); sweep dust pasca-migrasi juga 90/10 tepat. Log mentah:
+`fork-local/play-result.json`. Anvil sudah berhenti setelah run — state fork
+hilang, ulangi dari nol dengan perintah di `FORK_LOCAL_PROOF.md` §9.
+
+Temuan dari run ini (sudah dimasukkan ke `docs/FORK_LIVE_TEST.md`):
+- **Quote harus ERC20 (WBNB), bukan native.** Create dengan quote native ditolak
+  StandardVault: `Vault: quote must be ERC20`. Ini menjawab open question #1 di
+  README: pot fee mengalir sebagai quote ERC20.
+- **Buy pasca-nol harus pakai `buy()`, bukan `buyByBudget()`.** `buyByBudget`
+  setelah clock nol revert `CoreErrBudgetNotExecutable` (estimasi 0).
+- **Bug di `script/RegisterForkPreset.s.sol` (diperbaiki 2026-11-20, commit
+  menyusul):** `getModule` dideklarasikan dengan 4 nilai balik datar, padahal
+  Registry mengembalikan satu struct `ModuleRecord` — decode gagal dan script
+  revert setelah `getModule(DATA_KEY)`, padahal upsert sudah sukses. Perbaikan:
+  `getModule` mengembalikan `IOpenFourRegistry.ModuleRecord memory`, read-back
+  memakai `.beacon` / `.active`.
+- **Belum terbukti:** sell path, dan likuiditas PCS V2 (migrasi diuji dengan
+  adapter `0x0`, round tertutup tanpa pool).
+
 ## Files added 2026-11-20 (not yet pushed)
 
 - `script/RegisterForkPreset.s.sol` — fork-only preset registration (compiles; see `forge build`)

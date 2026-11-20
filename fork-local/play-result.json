@@ -1,0 +1,305 @@
+{
+  "steps": [
+    {
+      "step": "setup",
+      "chainId": 97,
+      "forkRegistry": "0x6c55D8EC102c5A6fD9da8bDA17296962ef2EEC6b",
+      "forkCore": "0x668B0Afb7d3Ca832C1ca739BfD4405B25178E9A8",
+      "creator": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "buyer2": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "coreSigner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "signerIsCreator": true
+    },
+    {
+      "step": "create-native-staticCall-failed",
+      "error": "execution reverted: \"Vault: quote must be ERC20\""
+    },
+    {
+      "step": "create-fallback-wbnb",
+      "quoteAsset": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd"
+    },
+    {
+      "step": "create",
+      "token": "0x9fc071182F6E5f7265A0d5F361aCFd62A77d7e3c",
+      "createTx": "0xab632eb73c245066db5d076681a4c5bc78bc67179b7f851d5c01673c0ffac7eb",
+      "quoteAsset": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+      "presetId": "1778027615734",
+      "creator": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "name": "LastWin Demo",
+      "symbol": "LWD",
+      "maxSupply": "1000000000.0",
+      "saleAmount": "800000000.0",
+      "raiseAmount": "1.0",
+      "exists": true,
+      "paused": false,
+      "vault": "0x71304756B4c072D570820Cf148A2801F371447Da",
+      "curveModule": "0x1Db43E05D89784F788C72408259C85bCCd8099c4",
+      "tradeModule": "0x4cC42e104aC8FAa8d5815f0041c3EEDdD2f6eaf1",
+      "migrateModule": "0x86feEDC53Bf98235Db1A1EB9f9efCE15c6955603",
+      "tokenModule": "0xdDDFAeD503F2B17B61f63B786963eAaB2adD95Bf",
+      "customData": "0x6B3d5B8bE73884578b9A88816AfdC0682FDAf616",
+      "customDataTag": "module.data.last_buyer_wins",
+      "customDataTagId": "0xe9b1d3e977f8677a",
+      "vaultRemainingForSale": "800000000.0",
+      "vaultTotalRaised": "0.0",
+      "vaultPhase": 1,
+      "gameState": {
+        "deadline": 1795169877,
+        "hardDeadline": 1795774377,
+        "timeLeft": 300,
+        "ended": false,
+        "migrated": false,
+        "lastBuyer": "0x0000000000000000000000000000000000000000",
+        "qualifyingBuys": 0,
+        "minQualifyingQuote": "0.01",
+        "extensionPerBuy": 60,
+        "winnerBps": "9000",
+        "potNative": "0.0",
+        "potErc20": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+        "potErc20Amount": "0.0"
+      }
+    },
+    {
+      "step": "buy1-creator-0.05",
+      "tx": "0x94aecd0e2a78ef67d828c06862a9819f1785748ac6616ee04b455b4299897daa",
+      "trader": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "budgetEth": "0.05",
+      "estimate": {
+        "curveQuote": "0.049019604225500989",
+        "totalFee": "0.000980392084510017",
+        "userPays": "0.049999996310011006",
+        "userReceives": "0.0",
+        "tokenAmount": "134476835.229117671833939169"
+      },
+      "maxPayEth": "0.049999996310011006",
+      "minOutTokens": "127752993.46766178824224221",
+      "nativeSpentEth": "0.0",
+      "tokensReceived": "134476826.547437229975633487",
+      "vaultRemainingForSale": "665523173.452562770024366513",
+      "vaultTotalRaised": "0.049019600607868149",
+      "gameState": {
+        "deadline": 1795169878,
+        "hardDeadline": 1795774377,
+        "timeLeft": 300,
+        "ended": false,
+        "migrated": false,
+        "lastBuyer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "qualifyingBuys": 1,
+        "minQualifyingQuote": "0.01",
+        "extensionPerBuy": 60,
+        "winnerBps": "9000",
+        "potNative": "0.0",
+        "potErc20": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+        "potErc20Amount": "0.000490196006078681"
+      }
+    },
+    {
+      "step": "resume",
+      "token": "0x9fc071182F6E5f7265A0d5F361aCFd62A77d7e3c",
+      "customData": "0x6B3d5B8bE73884578b9A88816AfdC0682FDAf616",
+      "vault": "0x71304756B4c072D570820Cf148A2801F371447Da",
+      "quoteAsset": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+      "gameState": {
+        "deadline": 1795169878,
+        "hardDeadline": 1795774377,
+        "timeLeft": 300,
+        "ended": false,
+        "migrated": false,
+        "lastBuyer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "qualifyingBuys": 1,
+        "minQualifyingQuote": "0.01",
+        "extensionPerBuy": 60,
+        "winnerBps": "9000",
+        "potNative": "0.0",
+        "potErc20": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+        "potErc20Amount": "0.000490196006078681"
+      }
+    },
+    {
+      "step": "fund-buyer2",
+      "depositTx": "0x256783ecf0045322671e17692d16036c090b876d7501dbad3621c4a3968f5eda",
+      "approveTx": "0x08c1557aba0e34a83228468e2fef3554fcfab1f65a363c9d9c58e59d0d74cd9c",
+      "wbnbBalance": "2.0"
+    },
+    {
+      "step": "buy2-buyer2-0.05",
+      "tx": "0xe29c2a30cde8188d4e1eb0e3ecfa20fcdfdddabc0d6929f3e59be0f2845b5125",
+      "trader": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "budgetEth": "0.05",
+      "estimate": {
+        "curveQuote": "0.049019594451323673",
+        "totalFee": "0.000980391889026472",
+        "userPays": "0.049999986340350145",
+        "tokenAmount": "104547524.599184058721897545"
+      },
+      "maxPayEth": "0.049999986340350145",
+      "minOutTokens": "99320148.369224855785802667",
+      "wbnbSpentEth": "0.0499999726807148",
+      "tokensReceived": "104547499.215905532882761787",
+      "vaultRemainingForSale": "560975674.236657237141604726",
+      "vaultTotalRaised": "0.098039181667392464",
+      "gameState": {
+        "deadline": 1795169905,
+        "hardDeadline": 1795774377,
+        "timeLeft": 300,
+        "ended": false,
+        "migrated": false,
+        "lastBuyer": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+        "qualifyingBuys": 2,
+        "minQualifyingQuote": "0.01",
+        "extensionPerBuy": 60,
+        "winnerBps": "9000",
+        "potNative": "0.0",
+        "potErc20": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+        "potErc20Amount": "0.000980391816673924"
+      }
+    },
+    {
+      "step": "buy3-small-0.005",
+      "tx": "0x6ac4ffef3e88a64df07372868b78e531e05e589c4d1879cf3f36dbbadb75ec59",
+      "trader": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "budgetEth": "0.005",
+      "estimate": {
+        "curveQuote": "0.004901960322902729",
+        "totalFee": "0.000098039206458053",
+        "userPays": "0.004999999529360782",
+        "tokenAmount": "9189088.376373678422034988"
+      },
+      "maxPayEth": "0.004999999529360782",
+      "minOutTokens": "8729633.957554994500933238",
+      "wbnbSpentEth": "0.004975489259414194",
+      "tokensReceived": "9189087.520943947752690522",
+      "vaultRemainingForSale": "551786586.715713289388914204",
+      "vaultTotalRaised": "0.102941141528884281",
+      "gameState": {
+        "deadline": 1795169905,
+        "hardDeadline": 1795774377,
+        "timeLeft": 299,
+        "ended": false,
+        "migrated": false,
+        "lastBuyer": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+        "qualifyingBuys": 2,
+        "minQualifyingQuote": "0.01",
+        "extensionPerBuy": 60,
+        "winnerBps": "9000",
+        "potNative": "0.0",
+        "potErc20": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+        "potErc20Amount": "0.001029411415288842"
+      }
+    },
+    {
+      "step": "time-travel",
+      "jumpedSeconds": 419,
+      "gameState": {
+        "deadline": 1795169905,
+        "hardDeadline": 1795774377,
+        "timeLeft": 0,
+        "ended": true,
+        "migrated": false,
+        "lastBuyer": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+        "qualifyingBuys": 2,
+        "minQualifyingQuote": "0.01",
+        "extensionPerBuy": 60,
+        "winnerBps": "9000",
+        "potNative": "0.0",
+        "potErc20": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+        "potErc20Amount": "0.001029411415288842"
+      },
+      "roundEnded": true
+    },
+    {
+      "step": "buy4-post-round-FAILED",
+      "error": "execution reverted (unknown custom error)"
+    },
+    {
+      "step": "settle",
+      "tx": "0x759aa476804c61d4b631542334be9eefeed538a9dbcbf3ed8c09efef941cab0f",
+      "caller": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "potBeforeNative": "0.0",
+      "potBeforeErc20": "0.001029411415288842",
+      "potErc20Asset": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+      "winnerExpectedWbnb": "0.000926470273759957",
+      "creatorExpectedWbnb": "0.000102941141528885",
+      "winnerWbnbDelta": "0.000926470273759957",
+      "creatorWbnbDelta": "0.000102941141528885",
+      "winnerNativeDelta": "0.0",
+      "creatorNativeDelta": "0.0",
+      "winnerDeltaMatches": true,
+      "creatorDeltaMatches": true,
+      "potAfterNative": "0.0",
+      "potAfterErc20": "0.0",
+      "totalPaidToWinnerWbnb": "0.000926470273759957",
+      "totalPaidToCreatorWbnb": "0.000102941141528885",
+      "events": [
+        {
+          "asset": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+          "winner": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "winnerAmount": "0.000926470273759957",
+          "creator": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "creatorAmount": "0.000102941141528885"
+        }
+      ],
+      "gameStateAfter": {
+        "deadline": 1795169905,
+        "hardDeadline": 1795774377,
+        "timeLeft": 0,
+        "ended": true,
+        "migrated": false,
+        "lastBuyer": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+        "qualifyingBuys": 2,
+        "minQualifyingQuote": "0.01",
+        "extensionPerBuy": 60,
+        "winnerBps": "9000",
+        "potNative": "0.0",
+        "potErc20": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+        "potErc20Amount": "0.0"
+      }
+    },
+    {
+      "step": "settle-again-sweep",
+      "tx": "0x982870b4c356d670b46f1b08350e2bd99bf02187834fd18362199e3bb37afd97",
+      "status": 1,
+      "winnerWbnbDelta": "0.0",
+      "creatorWbnbDelta": "0.0",
+      "potAfterErc20": "0.0"
+    },
+    {
+      "step": "buy-exact-post-round",
+      "tx": "0x9b8845aaedd617acd4cbd0a473f88a8c28cf63c93a78276537a1ae739dd9f12e",
+      "status": 1,
+      "trader": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "amountTokens": "1",
+      "maxPayEth": "0.001",
+      "tokensReceived": "1.0",
+      "vaultPhase": 3,
+      "vaultRemainingForSale": "551786585.715713289388914204",
+      "gameState": {
+        "deadline": 1795169905,
+        "timeLeft": 0,
+        "ended": true,
+        "migrated": true,
+        "lastBuyer": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+        "qualifyingBuys": 2,
+        "potNative": "0.0",
+        "potErc20": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+        "potErc20Amount": "0.000000000005393907"
+      },
+      "lastBuyerUnchanged": true,
+      "qualifyingBuysUnchanged": true
+    },
+    {
+      "step": "settle-after-post-round-buy",
+      "tx": "0x16bd1d96fa0b85d74e2e348f0891b7c2c4eee58e8cf06ed2fd966e348f1fa7b5",
+      "status": 1,
+      "potBeforeErc20": "0.000000000005393907",
+      "winnerWbnbDelta": "0.000000000004854516",
+      "creatorWbnbDelta": "0.000000000000539391",
+      "potAfterErc20": "0.0"
+    }
+  ],
+  "token": "0x9fc071182F6E5f7265A0d5F361aCFd62A77d7e3c",
+  "createTx": "0xab632eb73c245066db5d076681a4c5bc78bc67179b7f851d5c01673c0ffac7eb",
+  "quoteAsset": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+  "presetId": "1778027615734",
+  "fatal": "execution reverted: \"SafeERC20: low-level call failed\""
+}

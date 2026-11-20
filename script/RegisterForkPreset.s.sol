@@ -3,6 +3,7 @@ pragma solidity ^0.8.20;
 
 import {Script, console2} from "forge-std/Script.sol";
 import {OpenFourTypes} from "../src/openfour/libraries/OpenFourTypes.sol";
+import {IOpenFourRegistry} from "../src/openfour/interfaces/IOpenFourRegistry.sol";
 import {LastBuyerWinsCustomData} from "../src/LastBuyerWinsCustomData.sol";
 import {LastBuyerWinsTradeModule} from "../src/LastBuyerWinsTradeModule.sol";
 import {LastBuyerWinsMigrateModule} from "../src/LastBuyerWinsMigrateModule.sol";
@@ -23,7 +24,7 @@ interface IForkRegistry {
     ) external;
     function upsertPreset(OpenFourTypes.Preset calldata preset) external;
     function getPreset(uint256 presetId) external view returns (OpenFourTypes.Preset memory);
-    function getModule(bytes32 moduleKey) external view returns (address beacon, uint8 kind, OpenFourTypes.ModuleMetadata memory metadata, bool active);
+    function getModule(bytes32 moduleKey) external view returns (IOpenFourRegistry.ModuleRecord memory);
     function getPresetIds() external view returns (uint256[] memory);
 }
 
@@ -145,11 +146,13 @@ contract RegisterForkPreset is Script {
         vm.stopBroadcast();
 
         // On-chain read-back: fail loudly if registration did not stick.
-        (address dataBeacon,,, bool dataActive) = registry.getModule(DATA_KEY);
-        (address tradeBeacon,,, bool tradeActive) = registry.getModule(TRADE_KEY);
-        (address migrateBeacon,,, bool migrateActive) = registry.getModule(MIGRATE_KEY);
-        require(dataActive && tradeActive && migrateActive, "LBW: module not active after upsert");
-        require(dataBeacon != address(0) && tradeBeacon != address(0) && migrateBeacon != address(0), "LBW: module beacon missing");
+        // NOTE: getModule returns a single ModuleRecord struct; decoding it as
+        // four flat values fails (struct encoding starts with an offset word).
+        IOpenFourRegistry.ModuleRecord memory dataMod = registry.getModule(DATA_KEY);
+        IOpenFourRegistry.ModuleRecord memory tradeMod = registry.getModule(TRADE_KEY);
+        IOpenFourRegistry.ModuleRecord memory migrateMod = registry.getModule(MIGRATE_KEY);
+        require(dataMod.active && tradeMod.active && migrateMod.active, "LBW: module not active after upsert");
+        require(dataMod.beacon != address(0) && tradeMod.beacon != address(0) && migrateMod.beacon != address(0), "LBW: module beacon missing");
         OpenFourTypes.Preset memory created = registry.getPreset(presetId);
         require(created.active && created.createEnabled, "LBW: preset not active after upsert");
 
@@ -159,8 +162,8 @@ contract RegisterForkPreset is Script {
         console2.log("Trade impl         ", tradeImpl);
         console2.log("Migrate impl       ", migrateImpl);
         console2.log("Validator          ", validator);
-        console2.log("CustomData beacon  ", dataBeacon);
-        console2.log("Trade beacon       ", tradeBeacon);
-        console2.log("Migrate beacon     ", migrateBeacon);
+        console2.log("CustomData beacon  ", dataMod.beacon);
+        console2.log("Trade beacon       ", tradeMod.beacon);
+        console2.log("Migrate beacon     ", migrateMod.beacon);
     }
 }
