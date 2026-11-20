@@ -72,7 +72,10 @@ validator rules.
 
 - [Mechanism spec for integrators](docs/mechanism.md)
 - [Threat model and audit notes](docs/threat-model.md)
+- [Fork live test runbook — deploy → fork → register → play → settle](docs/FORK_LIVE_TEST.md)
+- [Verification record (2026-11-20): build, 31/31 tests, CI, deploy dry-run, live Core check](docs/VERIFICATION.md)
 - `script/Deploy.s.sol` deploys the implementations and validator (registration is done by OpenFour governance)
+- `script/RegisterForkPreset.s.sol` registers the preset on a developer-owned fork Registry (fork testnet only, never the official Registry)
 - CI runs `forge test` on every push
 
 ## Setup
